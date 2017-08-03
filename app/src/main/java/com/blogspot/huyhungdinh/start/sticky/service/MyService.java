@@ -29,6 +29,9 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("myLog", "Service: onStartCommand");
+        /*if (Build.VERSION.SDK_INT <= 19) {
+            onTaskRemoved(intent);
+        }*/
         return START_STICKY;
     }
 
@@ -44,6 +47,12 @@ public class MyService extends Service {
         AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, restartServicePI);
 
+        /*if (Build.VERSION.SDK_INT <= 19) {
+            Intent restart = new Intent(getApplicationContext(), this.getClass());
+            restart.setPackage(getPackageName());
+            startService(restart);
+        }*/
+        
         super.onTaskRemoved(rootIntent);
     }
 
